@@ -1,0 +1,40 @@
+
+# Dependencias
+node_modules/
+
+# Variables de entorno y credenciales
+.env
+.env.*
+!.env.example
+
+# Autorización Microsoft Graph
+.private/
+
+# Certificados y llaves
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Archivos temporales
+*.log
+logs/
+tmp/
+temp/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración local
+.vscode/
+
+# Copias de seguridad de base de datos
+*.backup
+*.dump
+*.sql.gz
+
+# Archivos de pruebas locales
+probarCorreo.js
+probarWhatsApp.js
+prueba-permisos.http

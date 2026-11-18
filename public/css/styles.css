@@ -1,0 +1,247 @@
+:root {
+            --sidebar-width: 260px;
+            --sidebar-bg: #172b4d;
+            --sidebar-hover: #2b466c;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid rgba(255,255,255,.15);
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .sidebar-header small {
+            color: #bdc9db;
+        }
+
+        .sidebar-menu {
+            padding: 16px 12px;
+            flex: 1;
+        }
+
+        .sidebar-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aebed4;
+            padding: 14px 12px 8px;
+        }
+
+        .menu-link {
+            display: block;
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 4px;
+            color: #d8e3f1;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: background .2s;
+        }
+
+        .menu-link:hover {
+            background: var(--sidebar-hover);
+            color: white;
+        }
+
+        .menu-link.active {
+            background: #2563eb;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid rgba(255,255,255,.15);
+        }
+
+        .usuario-nombre {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .usuario-rol {
+            font-size: 12px;
+            color: #bdc9db;
+        }
+
+        .main {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 18px 26px;
+        }
+
+        .topbar h5 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .content {
+            flex: 1;
+            padding: 24px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .modulo-frame {
+            display: none;
+            width: 100%;
+            height: calc(100vh - 125px);
+            min-height: 550px;
+            border: 0;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .modulo-frame.visible {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 210px;
+            }
+
+            .main {
+                margin-left: 210px;
+            }
+
+            .content {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                max-height: 320px;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .modulo-frame {
+                height: 75vh;
+            }
+        }
+        
+/* APARTADOS DESPLEGABLES */
+
+.menu-grupo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.menu-grupo[aria-expanded="true"] {
+    background: #2b466c;
+    color: white;
+}
+
+.menu-grupo[aria-expanded="true"] span:last-child {
+    transform: rotate(180deg);
+}
+
+.menu-grupo span:last-child {
+    transition: transform .2s;
+}
+
+.submenu {
+    padding-left: 15px;
+    margin-bottom: 8px;
+}
+
+.submenu .menu-link {
+    font-size: 13px;
+    padding: 10px 12px;
+    border-left: 2px solid #49627f;
+    border-radius: 0 6px 6px 0;
+}
+
+.submenu .menu-link:hover {
+    border-left-color: #93c5fd;
+}
+
+/*==========
+    REPORTES
+==============*/
+ body {
+            background-color: #f5f7fb;
+            color: #243247;
+        }
+
+        .indicador {
+            border: 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,.05);
+        }
+
+        .indicador .numero {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .panel-reporte {
+            border: 1px solid #e5e9ef;
+            border-radius: 12px;
+            background: white;
+        }
+
+        .grafico-contenedor {
+            position: relative;
+            height: 300px;
+        }
+
+        .tabla-contenedor {
+            max-height: 400px;
+            overflow: auto;
+        }
+
+        [hidden] {
+    display: none !important;
+}

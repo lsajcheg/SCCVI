@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>SCCVI - Gestión de Niños</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <a href="/" class="navbar-brand">SCCVI</a>
+        <span class="text-white">Gestión de Niños</span>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Registro de Niños</h5>
+        </div>
+
+        <div class="card-body">
+            <form id="formNino">
+                <input type="hidden" id="id_nino">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Nombres *</label>
+                        <input type="text" id="nombres"
+                               class="form-control"
+                               maxlength="100" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Apellidos *</label>
+                        <input type="text" id="apellidos"
+                               class="form-control"
+                               maxlength="100" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">
+                            Fecha de nacimiento *
+                        </label>
+                        <input type="date" id="fecha_nacimiento"
+                               class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Sexo *</label>
+                        <select id="sexo" class="form-select" required>
+                            <option value="">Seleccione</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Comunidad *</label>
+                        <select id="id_comunidad"
+                                class="form-select" required>
+                            <option value="">Seleccione comunidad</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h5>Padres o tutores asociados</h5>
+                <p class="text-muted small">
+                    Seleccione los responsables del niño.
+                    Marque uno como responsable principal.
+                </p>
+
+                <div class="row g-2">
+                    <div class="col-md-5">
+                        <select id="seleccionarPadre" class="form-select">
+                            <option value="">Seleccione padre o tutor</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select id="parentesco" class="form-select">
+                            <option value="Madre">Madre</option>
+                            <option value="Padre">Padre</option>
+                            <option value="Abuelo/a">Abuelo/a</option>
+                            <option value="Tio/a">Tío/a</option>
+                            <option value="Tutor">Tutor legal</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <button type="button"
+                                class="btn btn-outline-primary w-100"
+                                id="btnAgregarPadre">
+                            Agregar responsable
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Responsable</th>
+                                <th>Parentesco</th>
+                                <th>Principal</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaResponsables"></tbody>
+                    </table>
+                </div>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        Guardar niño
+                    </button>
+                    <button type="button" class="btn btn-secondary"
+                            onclick="limpiarFormulario()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="mensaje" role="alert"></div>
+
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Niños registrados</h5>
+        </div>
+        <div class="card-body table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre completo</th>
+                        <th>Nacimiento</th>
+                        <th>Sexo</th>
+                        <th>Comunidad</th>
+                        <th>Responsables</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaNinos"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="/js/ninos.js"></script>
+</body>
+</html>

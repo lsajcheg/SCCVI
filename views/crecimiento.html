@@ -1,0 +1,310 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>SCCVI - Control de Crecimiento</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <a href="/" class="navbar-brand">SCCVI</a>
+        <span class="text-white">Control de Crecimiento</span>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Registro de Crecimiento Infantil</h5>
+        </div>
+
+        <div class="card-body">
+            <form id="formCrecimiento">
+                <input type="hidden" id="id_registro">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label">Seleccione niño *</label>
+                        <select id="id_nino" class="form-select" required>
+                            <option value="">Seleccione niño</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Edad</label>
+                        <input type="text" id="edad"
+                               class="form-control" readonly>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Fecha de medición *</label>
+                        <input type="date" id="fecha_medicion"
+                               class="form-control" required>
+                    </div>
+
+                    
+<div class="col-md-4">
+    <label class="form-label">Peso *</label>
+
+    <div class="input-group">
+        <input
+            type="number"
+            id="peso_kg"
+            class="form-control"
+            min="0.01"
+            step="0.01"
+            placeholder="Ingrese el peso"
+            required
+        >
+
+        <select id="unidad_peso"
+                class="form-select"
+                style="max-width: 110px;">
+            <option value="kg">kg</option>
+            <option value="lb">lb</option>
+        </select>
+    </div>
+
+    <small class="text-muted" id="peso_convertido">
+        Peso almacenado en kilogramos.
+    </small>
+</div>
+
+
+                    <div class="col-md-4">
+                        <label class="form-label">Talla (cm) *</label>
+                        <input type="number" id="talla_cm"
+                               class="form-control"
+                               min="0.01" max="999.99" step="0.01"
+                               required>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Observaciones</label>
+                        <textarea id="observaciones"
+                                  class="form-control" rows="2"></textarea>
+                    </div>
+
+                </div>
+
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        Guardar medición
+                    </button>
+                    <button type="button" class="btn btn-secondary"
+                            onclick="limpiarFormulario()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="mensaje" role="alert"></div>
+
+<!-- EVALUACIÓN DE CRECIMIENTO OMS -->
+<div class="card shadow-sm mb-4" id="tarjetaOMS">
+    <div class="card-header">
+        <h5 class="mb-0">
+            Evaluación de Crecimiento - OMS 2007
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        <p class="text-muted" id="mensajeOMS">
+            Seleccione un niño para visualizar su evolución
+    de peso, talla e IMC. Las gráficas de talla e IMC
+    incluyen curvas de referencia OMS 2007 según
+    edad y sexo. La gráfica de peso muestra las
+    mediciones registradas.
+        </p>
+
+        <div id="resultadosOMS" style="display: none;">
+
+            <!-- =====================================
+                 EVALUACIÓN IMC PARA LA EDAD
+            ====================================== -->
+            <h6 class="mb-3">
+                IMC para la edad
+            </h6>
+
+            <div class="row g-3 mb-4">
+
+                <div class="col-md-4">
+                    <div class="border rounded p-3 text-center">
+                        <small class="text-muted">IMC</small>
+                        <h4 id="valorIMC">--</h4>
+                        <small>kg/m²</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded p-3 text-center">
+                        <small class="text-muted">
+                            Puntuación Z - IMC
+                        </small>
+                        <h4 id="valorZ">--</h4>
+                        <small>OMS 2007</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded p-3 text-center">
+                        <small class="text-muted">
+                            Percentil - IMC
+                        </small>
+                        <h4 id="valorPercentil">--</h4>
+                        <small>OMS 2007</small>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <!-- =====================================
+                 EVALUACIÓN TALLA PARA LA EDAD
+            ====================================== -->
+            <h6 class="mb-3">
+                Talla para la edad
+            </h6>
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <div class="border rounded p-3 text-center">
+                        <small class="text-muted">
+                            Talla registrada
+                        </small>
+                        <h4 id="valorTallaOMS">--</h4>
+                        <small>cm</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded p-3 text-center">
+                        <small class="text-muted">
+                            Puntuación Z - Talla
+                        </small>
+                        <h4 id="valorZTalla">--</h4>
+                        <small>OMS 2007</small>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded p-3 text-center">
+                        <small class="text-muted">
+                            Percentil - Talla
+                        </small>
+                        <h4 id="valorPercentilTalla">--</h4>
+                        <small>OMS 2007</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <p class="small text-muted mt-3 mb-0" id="notaOMS">
+            Resultados calculados mediante referencias OMS 2007
+            de IMC para la edad y talla para la edad.
+            Los valores requieren validación e interpretación
+            por personal de salud antes de su uso clínico.
+        </p>
+
+    </div>
+</div>
+
+
+
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Historial de Crecimiento</h5>
+        </div>
+
+        <div class="card-body table-responsive">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Niño</th>
+                        <th>Fecha</th>
+                        <th>Edad (meses)</th>
+                        <th>Peso (kg)</th>
+                        <th>Talla (cm)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaCrecimiento"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Gráficas de Crecimiento</h5>
+        </div>
+
+        <div class="card-body">
+            <p class="text-muted">
+    <p class="text-muted">
+    Seleccione un niño para visualizar su evolución
+    de peso, talla e IMC. Las gráficas de talla e IMC
+    incluyen curvas de referencia OMS 2007 según
+    edad y sexo. La gráfica de peso muestra
+    únicamente las mediciones registradas.
+</p>
+</p>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="text-center">Peso según edad</h6>
+                    <div style="position: relative; height: 350px; width: 100%;">
+    <canvas id="graficaPeso"></canvas>
+</div>
+                </div>
+                <div class="col-md-6">
+                    <h6 class="text-center">Talla según edad</h6>
+                    <div style="position: relative; height: 350px; width: 100%;">
+    <canvas id="graficaTalla"></canvas>
+</div>
+                </div>
+                
+<!-- GRÁFICA DE IMC SEGÚN EDAD - OMS 2007 -->
+<div class="col-12">
+    <hr class="my-4">
+
+    <h6 class="text-center">
+        IMC para la edad - Referencia OMS 2007
+    </h6>
+
+    <p class="text-muted text-center small">
+        Curvas de referencia según el sexo y la edad.
+        Los puntos representan las mediciones registradas.
+    </p>
+
+    <div style="position: relative; height: 420px;">
+        <canvas id="graficaIMC"></canvas>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script src="/js/crecimiento.js"></script>
+</body>
+</html>
